@@ -1,43 +1,7 @@
-lines <- as.numeric(readLines("input01.txt"))
-
-# Part 1
-sum(dplyr::lead(lines) > lines, na.rm = TRUE)
-
-# Part 2
-threesums <- slider::slide_dbl(lines, sum, .after = 2, .step = 1)
-sum(dplyr::lead(threesums) > threesums, na.rm = TRUE)
-
-
-steps <- readLines("input02.txt")
-
-# Part 1
-extract_dir_nums <- function(direction) {
-  dirs <- steps[grep(direction, steps)]
-  sum(as.numeric(gsub(direction, "", dirs)))
-}
-
-extract_dir_nums("forward") * (extract_dir_nums("down") - extract_dir_nums("up"))
-
-# Part 2
-library(dplyr)
-df <- data.frame(
-  step = steps,
-  step_val = readr::parse_number(steps)
-  ) %>%
-  mutate(
-    aim = cumsum(
-      case_when(
-        grepl("down", step) ~ step_val,
-        grepl("up", step) ~ -step_val,
-        TRUE ~ 0
-        )
-      ),
-    depth = ifelse(grepl("forward", step), step_val * aim, 0)
-    )
-
-sum(df$depth) * extract_dir_nums("forward")
-
-bits <- readLines("input03.txt")
+####################################################
+###################### DAY 3 ######################
+###################################################
+bits <- readLines("inputs/input03.txt")
 
 # Part 1
 bool_to_binary_to_decimal <- function(x, negate = FALSE) {
@@ -93,5 +57,3 @@ for (i in 1:ncol(co2mat)) {
 co2_rating <- strtoi(paste(as.vector(co2mat), collapse = ""), base = 2)
 
 oxygen_rating*co2_rating
-
-
