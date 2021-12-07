@@ -23,9 +23,7 @@ get_num_checks_vec <- function(number) {
 
 update_bool_boards <- function(bb, vec) {
   for (i in seq_along(vec)) {
-    ind <- vec[i]
-    if (is.na(ind)) next
-    bb[[i]][ind] <- TRUE
+    bb[[i]][vec[i]] <- TRUE
   }
   bb
 }
@@ -55,4 +53,40 @@ for (i in seq_along(numbers)) {
 last_number * sum(boards[[winning_board]][!bb[[winning_board]]])
 
 # Part 2
+# check_for_winners <- function(bb) {
+#   winning_boards <- c()
+#   for (i in seq_along(bb)) {
+#     for (j in 1:5) {
+#       check_rows <- all(bb[[i]][j,])
+#       check_cols <- all(bb[[i]][,j])
+#       if (check_rows | check_cols) winning_boards <- append(winning_boards, i)
+#     }
+#   }
+#   list(winning_boards)
+# }
+#
+# bb <- bool_boards
+# winning_board <- 0
+# winning_boards_lst <- list()
+# for (i in seq_along(numbers)) {
+#   v <- get_num_checks_vec(numbers[i])
+#   bb <- update_bool_boards(bb, v)
+#   winning_boards_lst <- append(winning_boards_lst, check_for_winners(bb))
+# }
+#
+# last_board_to_win <- as.numeric(names(sort(table(unlist(winning_boards_lst)))[1]))
+# num_seq <- sapply(winning_boards_lst, function(x) last_board_to_win %in% x)
+# last_board_won_after <- min(which(num_seq == TRUE)) - 1
+#
+# bb <- bool_boards
+# winning_board <- 0
+# last_number <- 0
+# for (i in 1:last_board_won_after) {
+#   v <- get_num_checks_vec(numbers[i])
+#   bb <- update_bool_boards(bb, v)
+#   winning_board <- check_for_winner(bb)
+#   last_number <- numbers[i]
+# }
+#
+# last_number * sum(boards[[last_board_to_win]][!bb[[last_board_to_win]]])
 
